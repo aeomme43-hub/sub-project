@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUB - 어플 및 장소 후기</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="navbar-brand">SUB</div>
+        <div class="navbar-menu">
+            <button class="nav-btn" data-section="online">온라인</button>
+            <button class="nav-btn" data-section="offline">오프라인</button>
+            <button class="nav-btn register-btn">+</button>
+        </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+        <!-- 온라인 섹션 (어플 후기) -->
+        <section id="online-section" class="section active">
+            <h2>어플 후기</h2>
+            
+            <!-- 어플 검색창 -->
+            <div class="search-container">
+                <input type="text" id="app-search" placeholder="어플 이름 검색...">
+            </div>
+
+            <!-- 어플 슬라이드 -->
+            <div class="app-slider">
+                <div class="slider-container">
+                    <div class="app-card">
+                        <img src="images/app1.png" alt="어플1" class="app-icon">
+                        <h3>어플 이름 1</h3>
+                        <div class="store-buttons">
+                            <a href="#" class="store-btn google-play">Google Play</a>
+                            <a href="#" class="store-btn apple-store">App Store</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <img src="images/app2.png" alt="어플2" class="app-icon">
+                        <h3>어플 이름 2</h3>
+                        <div class="store-buttons">
+                            <a href="#" class="store-btn google-play">Google Play</a>
+                            <a href="#" class="store-btn apple-store">App Store</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <img src="images/app3.png" alt="어플3" class="app-icon">
+                        <h3>어플 이름 3</h3>
+                        <div class="store-buttons">
+                            <a href="#" class="store-btn google-play">Google Play</a>
+                            <a href="#" class="store-btn apple-store">App Store</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn prev">◀</button>
+                <button class="slider-btn next">▶</button>
+            </div>
+        </section>
+
+        <!-- 오프라인 섹션 (지도별 장소 후기) -->
+        <section id="offline-section" class="section">
+            <h2>지도별 장소 후기</h2>
+            
+            <!-- 지도 검색창 -->
+            <div class="search-container">
+                <input type="text" id="map-search" placeholder="대륙, 나라, 도시, 장소 검색...">
+            </div>
+
+            <!-- 세계지도 -->
+            <div class="world-map">
+                <div class="interactive-map" id="interactive-map">
+                    <div class="map-view" id="continent-view">
+                        <h3>대륙을 선택하세요</h3>
+                        <div class="world-map-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png" alt="세계지도" class="world-map-img" usemap="#world-map">
+                            <map name="world-map">
+                                <area shape="rect" coords="550,80,800,180" alt="아시아" data-continent="asia" class="continent-area">
+                                <area shape="rect" coords="450,80,540,150" alt="유럽" data-continent="europe" class="continent-area">
+                                <area shape="rect" coords="150,80,320,220" alt="북아메리카" data-continent="north-america" class="continent-area">
+                                <area shape="rect" coords="220,240,320,380" alt="남아메리카" data-continent="south-america" class="continent-area">
+                                <area shape="rect" coords="440,160,540,340" alt="아프리카" data-continent="africa" class="continent-area">
+                                <area shape="rect" coords="700,280,820,360" alt="오세아니아" data-continent="oceania" class="continent-area">
+                            </map>
+                        </div>
+                        <div class="continent-buttons">
+                            <button class="continent-btn" data-continent="asia">아시아</button>
+                            <button class="continent-btn" data-continent="europe">유럽</button>
+                            <button class="continent-btn" data-continent="north-america">북아메리카</button>
+                            <button class="continent-btn" data-continent="south-america">남아메리카</button>
+                            <button class="continent-btn" data-continent="africa">아프리카</button>
+                            <button class="continent-btn" data-continent="oceania">오세아니아</button>
+                        </div>
+                    </div>
+                    <div class="map-view" id="country-view" style="display: none;">
+                        <button class="back-btn" id="back-to-continent">← 대륙으로 돌아가기</button>
+                        <h3 id="selected-continent-name">나라 선택</h3>
+                        <div class="country-grid" id="country-grid"></div>
+                    </div>
+                    <div class="map-view" id="city-view" style="display: none;">
+                        <button class="back-btn" id="back-to-country">← 나라로 돌아가기</button>
+                        <h3 id="selected-country-name">도시 선택</h3>
+                        <div class="city-grid" id="city-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 장소 목록 -->
+            <div class="location-list">
+                <h3>선택한 도시의 장소들</h3>
+                <div id="locations-container">
+                    <p>도시를 선택하면 장소들이 표시됩니다.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 어플 후기 모달 -->
+    <div id="app-review-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-app-name">어플 이름</h2>
+            <div id="app-reviews">
+                <p>후기가 없습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 장소 후기 모달 -->
+    <div id="location-review-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-location-name">장소 이름</h2>
+            <div id="location-reviews">
+                <p>후기가 없습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 등록 팝업 -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>후기 등록</h2>
+            <div class="register-tabs">
+                <button class="tab-btn active" data-tab="app">어플 후기</button>
+                <button class="tab-btn" data-tab="location">장소 후기</button>
+            </div>
+            
+            <!-- 어플 후기 등록 폼 -->
+            <form id="app-review-form" class="register-form active">
+                <div class="form-group">
+                    <label for="app-name">어플 이름:</label>
+                    <input type="text" id="app-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-rating">별점:</label>
+                    <select id="app-rating">
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="app-review-text">후기 내용:</label>
+                    <textarea id="app-review-text" rows="4" required></textarea>
+                </div>
+                <button type="submit">등록하기</button>
+            </form>
+
+            <!-- 장소 후기 등록 폼 -->
+            <form id="location-review-form" class="register-form">
+                <div class="form-group">
+                    <label for="location-name">장소 이름:</label>
+                    <input type="text" id="location-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="location-city">도시:</label>
+                    <input type="text" id="location-city" required>
+                </div>
+                <div class="form-group">
+                    <label for="location-rating">별점:</label>
+                    <select id="location-rating">
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location-review-text">후기 내용:</label>
+                    <textarea id="location-review-text" rows="4" required></textarea>
+                </div>
+                <button type="submit">등록하기</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
